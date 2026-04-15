@@ -12,10 +12,12 @@ namespace ConsoleApp1
         public double KeskmineHinne { get; set; } //põhitoestus 60eur
         public int Puudumised { get; set; } = 0; //põhitoestus
         public bool KasOnSotsTõend { get; set; } = false; //eritoestus1 12eur
-         
+        public TööTüüp VäljamakseTüüp { get; set; } = TööTüüp.Toetus; //Õpilase puhul on väljamakse
+        public Õppevorm Staatus { get; set; } // Kasutame enumi andmetüübina
+
         public void Õpi()
         {
-            Console.WriteLine($"{Nimi} õpib {Kool} {Klass}. klassis.");
+            Console.WriteLine($"{Nimi} õpib {Klass}. klassis. Vorm: {Staatus}"); Console.WriteLine($"{Nimi} õpib {Kool} {Klass}. klassis.");
         }
 
         public double ArvutaPalk()

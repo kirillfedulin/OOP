@@ -10,16 +10,18 @@ namespace ConsoleApp1
             public string Aine { get; set; }
             public string Nimi { get; set; }
             public double Tunnitasu { get; set; }
-            public int Tunnidkuus { get; set; }
+            public int TunnidKuus { get; set; }
+            public TööTüüp VäljamakseTüüp { get; set; } = TööTüüp.Palk; //Õpilase puhul on väljamakse
 
-            public void Õpeta()
+
+        public void Õpeta()
             {
                 Console.WriteLine($"{Nimi} õpetab ainet: {Aine}.");
             }
             
         public double ArvutaPalk()
             {
-                return Tunnitasu * Tunnidkuus;
+                return Tunnitasu * TunnidKuus;
             }
         }
 

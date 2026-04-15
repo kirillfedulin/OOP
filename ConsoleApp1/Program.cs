@@ -1,53 +1,53 @@
-﻿namespace ConsoleApp1
+﻿using System;
+
+namespace ConsoleApp1
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            //Isik inimene1 = new Isik();
-            //inimene1.Nimi = "Mati";
-            //inimene1.Vanus = 35;
-            //inimene1.Tervita(); // Väljund: Tere! Mina olen Mati...
-
-            //Isik2 inimene1 = new Isik2();
-            //inimene1.Nimi = "Mati";
-            //inimene1.Sünniaasta = 2009;
-            ///inimene1.Tervita();
-            // Väljund: Tere! Mina olen Mati...
-
-            Console.WriteLine("Kas te olete õpetaja või õpilane?");
-            string answer = Console.ReadLine();
-            if (answer == "Õpetaja")
+            Õpetaja õpetaja1 = new Õpetaja
             {
-                Õpetaja õpetaja1 = new Õpetaja();
-                Console.WriteLine("Mis teile tunnitasu?");
-                double tunniastu = double.Parse(Console.ReadLine());
-                õpetaja1.Tunnitasu = tunniastu;
-                Console.WriteLine("Mis teile tunnidkuus?");
-                int tunnidkuus = int.Parse(Console.ReadLine());
-                õpetaja1.Tunnidkuus = tunnidkuus;
-                Console.WriteLine("Teie palk: "+ õpetaja1.ArvutaPalk());
-            }
-            else if (answer == "Õpilane")
-            {
-                Õpilane õpilane1 = new Õpilane();
-                Console.WriteLine("Mis on teie keskminehinne? ");
-                double keskminehinne = double.Parse(Console.ReadLine());
-                õpilane1.KeskmineHinne = keskminehinne;
-                Console.WriteLine("Kui palju puudumised teil on? ");
-                int puudumised = int.Parse(Console.ReadLine());
-                õpilane1.Puudumised = puudumised;
-                Console.WriteLine("Kas teil on sotstõend");
-                string sotstõend = Console.ReadLine();
-                if (sotstõend == "Jah")
-                {
-                    Console.WriteLine("Teie eritoestus on " + õpilane1.ArvutaPalk());
-                }
-                else
-                {
-                    Console.WriteLine("Teie põhitoestus on " + õpilane1.ArvutaPalk());
+                Nimi = "Arkadi",
+                Sünniaasta = 2000,
+                Aine = "Programmeerimine",
+                Tunnitasu = 20,
+                TunnidKuus = 80
+            };
+            õpetaja1.Õpeta();
+            Console.WriteLine($"Palk: {õpetaja1.ArvutaPalk()}");
 
-                }
+            Õpilane õpilane1 = new Õpilane
+            {
+                Nimi = "Martin",
+                Sünniaasta = 2005,
+                Kool = "TTHK",
+                Klass = 12
+            };
+
+            õpilane1.Õpi();
+
+            List<ITööline> palgasaajad = new List<ITööline>();
+            Õpilane mati = new Õpilane();
+            mati.Nimi = "Mati";
+            mati.KeskmineHinne = 4.0;
+
+            Õpilane k2adi = new Õpilane { Nimi = "Kadi", Klass = 11, Kool = "Kutsehariduskeskus", KeskmineHinne = 10, KasOnSotsTõend = false};
+            Õpilane jü2ri = new Õpilane { Nimi = "Jüri", Klass = 12, Kool = "Kutsehariduskeskus", KeskmineHinne = 20, KasOnSotsTõend = false };
+
+            Õpetaja anna = new Õpetaja { Nimi = "Kadi", Aine = "Python", Tunnitasu = 20, TunnidKuus = 60 };
+            Õpetaja peeter = new Õpetaja { Nimi = "Jüri", Aine = "C#", Tunnitasu = 25, TunnidKuus = 60 };
+
+            Õpetaja kadi = new Õpetaja { Nimi = "Kadi", Aine = "Python", Tunnitasu = 20, TunnidKuus = 60 };
+            Õpetaja jüri = new Õpetaja { Nimi = "Jüri", Aine = "C#", Tunnitasu = 25, TunnidKuus = 60 };
+
+            palgasaajad.AddRange(new ITööline[] { anna, peeter });
+
+            Console.WriteLine("\n--- Väljamaksed ---");
+            foreach (ITööline isik in palgasaajad)
+            {
+                string tüüp = isik.VäljamakseTüüp.ToString();
+                Console.WriteLine($" {tüüp}. Summa: {isik.ArvutaPalk()} eurot. {((Isik)isik).Nimi}le");
             }
         }
     }
