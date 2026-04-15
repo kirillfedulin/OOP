@@ -1,82 +1,98 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ConsoleApp1;
+using System.Net.WebSockets;
 
-namespace ConsoleApp1
+namespace OOP_Csharp
 {
     internal class Program
     {
         static void Main(string[] args)
         {
+            //Isik inimene1 = new Isik();
+            //inimene1.Nimi = "Mati";
+            //inimene1.Sünniaasta = 2000;
+            //inimene1.Tervita(); // Väljund: Tere! Mina olen Mati...
+
+            Koolihaldus minuKool = new Koolihaldus();
             List<ITööline> palgasaajad = new List<ITööline>();
-
-            Õpetaja õpetaja1 = new Õpetaja
+            Random rnd = new Random();
+            ITööline[] toolised = new ITööline[2]
             {
-                Nimi = "Arkadi",
-                Sünniaasta = 2000,
-                Aine = "Programmeerimine",
-                Tunnitasu = 20,
-                TunnidKuus = 80
+                new Õpilane(),
+                new Õpetaja()
             };
 
-            Õpilane õpilane1 = new Õpilane
+            //Õpetajad
+            string[] õpetajaNimed = { "Marina", "Aleksei", "Katrin", "Dmitri", "Liisa" };
+            int[] õpetajaSünniaastad = { 1975, 1982, 1990, 1995, 1988 };
+            string[] ained = { "programmeerimine", "matemaatika", "füüsika", "keemia", "eesti keel" };
+            double[] tunnitasud = { 13.8, 15.0, 12.5, 14.2, 16.0 };
+            int[] tunnidKuus = { 120, 130, 140, 150, 160 };
+
+            //Õpilased
+            string[] õpilasNimed = { "Yaroslav", "Anna", "Peeter", "Maria", "Ivan" };
+            int[] õpilasSünniaastad = { 2005, 2006, 2007, 2008, 2009 };
+            string[] koolid = { "TTHK", "Gustav Adolfi Gümnaasium", "Tallinna Reaalkool" };
+            int[] klassid = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
+
+            int[] puudumised = { 0, 5, 10, 13, 20 };
+
+            Õppevorm[] vormid = (Õppevorm[])Enum.GetValues(typeof(Õppevorm)); // teeb list
+
+            for (int i = 0; i < 5; i++)
             {
-                Nimi = "Martin",
-                Sünniaasta = 2005,
-                Kool = "TTHK",
-                Klass = 12,
-                KeskmineHinne = 4.5 
-            };
 
-            Õpilane õpilane2 = new Õpilane
-            {
-                Nimi = "Yarik",
-                Sünniaasta = 2009,
-                Kool = "TTHK",
-                Klass = 9,
-                KeskmineHinne = 4.5
-            };
+                int randomIsik = rnd.Next(0, 2);
+                var tooline = toolised[randomIsik];
+                switch (tooline)
+                {
+                    case Õpilane:
 
-            Õpetaja õpetaja2 = new Õpetaja
-            {
-                Nimi = "Oleinik",
-                Sünniaasta = 2000,
-                Aine = "Programmeerimine",
-                Tunnitasu = 20,
-                TunnidKuus = 80
-            };
+                        Õpilane õpilane = new Õpilane();
+                        õpilane.Nimi = õpilasNimed[rnd.Next(1, 5)];
+                        õpilane.Sünniaasta = õpilasSünniaastad[rnd.Next(1, 5)];
+                        õpilane.Kool = koolid[rnd.Next(1, 3)];
+                        õpilane.Klass = klassid[rnd.Next(1, 12)];
+                        õpilane.KeskmineHinne = rnd.NextDouble() * 5;
+                        õpilane.Puudumised = puudumised[rnd.Next(1, 5)];
+                        õpilane.Staatus = vormid[rnd.Next(vormid.Length)];
 
-            Õpilane mati = new Õpilane { Nimi = "Mati", KeskmineHinne = 4.0 };
+                        õpilane.Kirjelda();
+                        õpilane.Õpi();
+                        õpilane.ArvutaPalk();
+                        minuKool.LisaInimene(õpilane);
+                        palgasaajad.Add(õpilane);
+                        Console.WriteLine("===================================================");
+                        break;
 
-            palgasaajad.Add(õpetaja1);
-            palgasaajad.Add(õpilane1);
-            palgasaajad.Add(õpilane2);
-            palgasaajad.Add(õpetaja2);
-            palgasaajad.Add(mati);
 
-            // 2. 
-            Console.WriteLine("\n--- Väljamaksed ---");
+                    case Õpetaja:
+
+                        Õpetaja õpetaja = new Õpetaja();
+                        õpetaja.Nimi = õpetajaNimed[rnd.Next(1, 5)];
+                        õpetaja.Sünniaasta = õpetajaSünniaastad[rnd.Next(1, 5)];
+                        õpetaja.Aine = ained[rnd.Next(1, 5)];
+                        õpetaja.Tunnitasu = tunnitasud[rnd.Next(1, 5)];
+                        õpetaja.TunnidKuus = tunnidKuus[rnd.Next(1, 5)];
+                        palgasaajad.Add(õpetaja);
+                        õpetaja.Kirjelda();
+                        õpetaja.Õpeta();
+                        minuKool.LisaInimene(õpetaja);
+                        Console.WriteLine("===================================================");
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+            Console.WriteLine("---VÄLJAMAKSED---");
             foreach (ITööline isik in palgasaajad)
             {
                 string tüüp = isik.VäljamakseTüüp.ToString();
-                Console.WriteLine($"{tüüp}. Summa: {isik.ArvutaPalk()} eurot. Saaja: {((Isik)isik).Nimi}");
+                Console.WriteLine($"{tüüp}. summa: {isik.ArvutaPalk()} eurot. {((Isik)isik).Nimi}le");
+
             }
 
-            Koolihaldus minuKool = new Koolihaldus();
-
-            minuKool.LisaInimene(õpetaja1);
-            minuKool.LisaInimene(õpilane1);
-            minuKool.LisaInimene(õpilane2);
-            minuKool.LisaInimene(õpetaja2);
-            minuKool.LisaInimene(new Õpetaja { Nimi = "Kadi", Aine = "Python", Tunnitasu = 20, TunnidKuus = 60 });
-            minuKool.LisaInimene(new Õpetaja { Nimi = "Oleinik", Aine = "C#", Tunnitasu = 20, TunnidKuus = 60 });
-            minuKool.LisaInimene(new Õpetaja { Nimi = "Avik", Aine = "IT", Tunnitasu = 20, TunnidKuus = 60 });
-            minuKool.LisaInimene(new Õpilane { Nimi = "Mari", Klass = 10, Staatus = Õppevorm.Päevane });
-            minuKool.LisaInimene(new Õpilane { Nimi = "Yarik", Klass = 9, Staatus = Õppevorm.Päevane });
-
-
-
-
-            Console.WriteLine("\n--- Kooli nimekiri ---");
+            Console.WriteLine("================MINU KOOL==================");
             minuKool.KuvaKõik();
         }
     }
