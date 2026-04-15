@@ -27,10 +27,30 @@ namespace ConsoleApp1
                 KeskmineHinne = 4.5 
             };
 
+            Õpilane õpilane2 = new Õpilane
+            {
+                Nimi = "Yarik",
+                Sünniaasta = 2009,
+                Kool = "TTHK",
+                Klass = 9,
+                KeskmineHinne = 4.5
+            };
+
+            Õpetaja õpetaja2 = new Õpetaja
+            {
+                Nimi = "Oleinik",
+                Sünniaasta = 2000,
+                Aine = "Programmeerimine",
+                Tunnitasu = 20,
+                TunnidKuus = 80
+            };
+
             Õpilane mati = new Õpilane { Nimi = "Mati", KeskmineHinne = 4.0 };
 
             palgasaajad.Add(õpetaja1);
             palgasaajad.Add(õpilane1);
+            palgasaajad.Add(õpilane2);
+            palgasaajad.Add(õpetaja2);
             palgasaajad.Add(mati);
 
             // 2. 
@@ -45,8 +65,16 @@ namespace ConsoleApp1
 
             minuKool.LisaInimene(õpetaja1);
             minuKool.LisaInimene(õpilane1);
+            minuKool.LisaInimene(õpilane2);
+            minuKool.LisaInimene(õpetaja2);
             minuKool.LisaInimene(new Õpetaja { Nimi = "Kadi", Aine = "Python", Tunnitasu = 20, TunnidKuus = 60 });
+            minuKool.LisaInimene(new Õpetaja { Nimi = "Oleinik", Aine = "C#", Tunnitasu = 20, TunnidKuus = 60 });
+            minuKool.LisaInimene(new Õpetaja { Nimi = "Avik", Aine = "IT", Tunnitasu = 20, TunnidKuus = 60 });
             minuKool.LisaInimene(new Õpilane { Nimi = "Mari", Klass = 10, Staatus = Õppevorm.Päevane });
+            minuKool.LisaInimene(new Õpilane { Nimi = "Yarik", Klass = 9, Staatus = Õppevorm.Päevane });
+
+
+
 
             Console.WriteLine("\n--- Kooli nimekiri ---");
             minuKool.KuvaKõik();
