@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ConsoleApp1
 {
@@ -6,6 +7,8 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
+            List<ITööline> palgasaajad = new List<ITööline>();
+
             Õpetaja õpetaja1 = new Õpetaja
             {
                 Nimi = "Arkadi",
@@ -14,41 +17,39 @@ namespace ConsoleApp1
                 Tunnitasu = 20,
                 TunnidKuus = 80
             };
-            õpetaja1.Õpeta();
-            Console.WriteLine($"Palk: {õpetaja1.ArvutaPalk()}");
 
             Õpilane õpilane1 = new Õpilane
             {
                 Nimi = "Martin",
                 Sünniaasta = 2005,
                 Kool = "TTHK",
-                Klass = 12
+                Klass = 12,
+                KeskmineHinne = 4.5 
             };
 
-            õpilane1.Õpi();
+            Õpilane mati = new Õpilane { Nimi = "Mati", KeskmineHinne = 4.0 };
 
-            List<ITööline> palgasaajad = new List<ITööline>();
-            Õpilane mati = new Õpilane();
-            mati.Nimi = "Mati";
-            mati.KeskmineHinne = 4.0;
+            palgasaajad.Add(õpetaja1);
+            palgasaajad.Add(õpilane1);
+            palgasaajad.Add(mati);
 
-            Õpilane k2adi = new Õpilane { Nimi = "Kadi", Klass = 11, Kool = "Kutsehariduskeskus", KeskmineHinne = 10, KasOnSotsTõend = false};
-            Õpilane jü2ri = new Õpilane { Nimi = "Jüri", Klass = 12, Kool = "Kutsehariduskeskus", KeskmineHinne = 20, KasOnSotsTõend = false };
-
-            Õpetaja anna = new Õpetaja { Nimi = "Kadi", Aine = "Python", Tunnitasu = 20, TunnidKuus = 60 };
-            Õpetaja peeter = new Õpetaja { Nimi = "Jüri", Aine = "C#", Tunnitasu = 25, TunnidKuus = 60 };
-
-            Õpetaja kadi = new Õpetaja { Nimi = "Kadi", Aine = "Python", Tunnitasu = 20, TunnidKuus = 60 };
-            Õpetaja jüri = new Õpetaja { Nimi = "Jüri", Aine = "C#", Tunnitasu = 25, TunnidKuus = 60 };
-
-            palgasaajad.AddRange(new ITööline[] { anna, peeter });
-
+            // 2. 
             Console.WriteLine("\n--- Väljamaksed ---");
             foreach (ITööline isik in palgasaajad)
             {
                 string tüüp = isik.VäljamakseTüüp.ToString();
-                Console.WriteLine($" {tüüp}. Summa: {isik.ArvutaPalk()} eurot. {((Isik)isik).Nimi}le");
+                Console.WriteLine($"{tüüp}. Summa: {isik.ArvutaPalk()} eurot. Saaja: {((Isik)isik).Nimi}");
             }
+
+            Koolihaldus minuKool = new Koolihaldus();
+
+            minuKool.LisaInimene(õpetaja1);
+            minuKool.LisaInimene(õpilane1);
+            minuKool.LisaInimene(new Õpetaja { Nimi = "Kadi", Aine = "Python", Tunnitasu = 20, TunnidKuus = 60 });
+            minuKool.LisaInimene(new Õpilane { Nimi = "Mari", Klass = 10, Staatus = Õppevorm.Päevane });
+
+            Console.WriteLine("\n--- Kooli nimekiri ---");
+            minuKool.KuvaKõik();
         }
     }
 }

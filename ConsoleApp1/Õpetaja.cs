@@ -1,29 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Transactions;
+﻿using ConsoleApp1;
 
-namespace ConsoleApp1
+public class Õpetaja : Isik, ITööline
 {
-        public class Õpetaja : Isik, ITööline
-        {
-            public string Aine { get; set; }
-            public string Nimi { get; set; }
-            public double Tunnitasu { get; set; }
-            public int TunnidKuus { get; set; }
-            public TööTüüp VäljamakseTüüp { get; set; } = TööTüüp.Palk; //Õpilase puhul on väljamakse
+    public string Aine { get; set; }
+    // УДАЛИЛИ Nimi отсюда, так как он наследуется от Isik
 
+    public double Tunnitasu { get; set; }
+    public int TunnidKuus { get; set; }
+    public TööTüüp VäljamakseTüüp { get; set; } = TööTüüp.Palk;
 
-        public void Õpeta()
-            {
-                Console.WriteLine($"{Nimi} õpetab ainet: {Aine}.");
-            }
-            
-        public double ArvutaPalk()
-            {
-                return Tunnitasu * TunnidKuus;
-            }
-        }
+    // ОБЯЗАТЕЛЬНО: Реализация абстрактного метода
+    public override void Kirjelda()
+    {
+        Console.WriteLine($"Õpetaja {Nimi} õpetab ainet {Aine}.");
+    }
 
+    // Реализация метода интерфейса
+    public double ArvutaPalk()
+    {
+        return Tunnitasu * TunnidKuus;
+    }
 
+    public void Õpeta()
+    {
+        Console.WriteLine($"{Nimi} õpetab ainet: {Aine}.");
+    }
 }
+    
