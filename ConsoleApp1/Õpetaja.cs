@@ -16,7 +16,7 @@ public class Õpetaja : Isik, ITööline
     }
 
     // Реализация метода интерфейса
-    public double ArvutaPalk()
+    public virtual double ArvutaPalk()
     {
         return Tunnitasu * TunnidKuus;
     }
