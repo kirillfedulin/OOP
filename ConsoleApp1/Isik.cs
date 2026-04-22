@@ -4,6 +4,8 @@
     public string Nimi { get; set; }
     public int Tunnitasu { get; set; }
 
+    public static int InimesteKoguarv = 0;
+
     public void Ask()
     {
         Console.Write("Sisesta oma sünniaasta: "); 
@@ -12,11 +14,14 @@
             Sünniaasta = answer;
         }
     }
-    public Isik(string nimi) { Nimi = nimi; }
+    public Isik(string nimi) 
+    { Nimi = nimi;         // Iga kord, kui luuakse uus isik (käivitub konstruktor), suurendame loendurit
+        InimesteKoguarv++;
+    }
 
     protected Isik()
     {
-
+        InimesteKoguarv++;
     }
     public Isik(int tunnitasu) { Tunnitasu = tunnitasu;  }
 

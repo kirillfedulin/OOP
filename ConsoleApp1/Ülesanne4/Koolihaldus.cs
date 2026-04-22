@@ -12,14 +12,31 @@ public class Koolihaldus
         inimesed.Add(isik);
     }
 
-    public void KuvaKõik()
+    // ... (eelnevad meetodid LisaInimene, KuvaKõik) ...
+
+    // 1. Otsing nime järgi (võtab vastu stringi)
+    public void Otsi(string otsitavNimi)
     {
-        Console.WriteLine("\n--- KOOLI NIMEKIRI ---");
+        Console.WriteLine($"\nOtsime nime: {otsitavNimi}");
         foreach (var isik in inimesed)
         {
-            // Polümorfism teeb siin imesid! 
-            // C# teab ise, kas käivitada Õpetaja või Õpilase Kirjelda() meetod.
-            isik.Kirjelda();
+            if (isik.Nimi.Contains(otsitavNimi)) isik.Kirjelda();
         }
     }
+
+    // 2. Otsing nimekirjas numbri/sünniaasta järgi (sama nimi, aga võtab vastu int)
+    public void Otsi(int sünniaasta)
+    {
+        Console.WriteLine($"\nOtsime kedagi, kes on sündinud aastal: {sünniaasta}");
+
+        foreach (var isik in inimesed)
+        {
+            if (isik.Sünniaasta == sünniaasta)
+            {
+                isik.Kirjelda();
+            }
+        }
+    }
+
+
 }

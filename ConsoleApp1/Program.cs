@@ -87,3 +87,10 @@ foreach (ITööline isik in palgasaajad)
     string tüüp = isik.VäljamakseTüüp.ToString();
     Console.WriteLine($" {tüüp}. Summa: {isik.ArvutaPalk()} eurot. {((Isik)isik).Nimi}le");
 }
+
+minuKool.Otsi("Mari");
+minuKool.Otsi(2008);
+
+Console.WriteLine($"Kokku on: {Isik.InimesteKoguarv} isikut");
+
+Console.ReadLine(); 
