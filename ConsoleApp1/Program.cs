@@ -1,100 +1,89 @@
-﻿using ConsoleApp1;
-using ConsoleApp1.ulesanne1;
-using System.Net.WebSockets;
+﻿// See https://aka.ms/new-console-template for more information
+using ConsoleApp1;
 
-namespace OOP_Csharp
+// Loome Isik klassi objekti ja kasutame selle omadusi ja meetodit
+//Isik inimene1 = new Isik();
+
+//inimene1.Nimi = "Mati";
+//inimene1.Sünniaasta = 200;
+//inimene1.Tervita(); // Väljund: Tere! Mina olen Mati...
+
+// Klassi Õpilane ja Õpetaja näited.
+// Päritud Isik klassist, seega saavad kasutada Isiku omadusi ja meetodeid
+Õpetaja õpetaja1 = new Õpetaja();
+õpetaja1.Nimi = "Eve";
+õpetaja1.Sünniaasta = 1980;
+õpetaja1.Aine = "Matemaatika";
+õpetaja1.Tervita(); // Väljund: Tere! Mina olen Eve...
+õpetaja1.Õpeta(); // Väljund: Eve õpetab ainet: Matemaatika.
+õpetaja1.Kirjelda(); // Väljund: Mina olen õpetaja Eve ja ma õpetan: Matemaatika.
+Console.WriteLine("\n--- Õpilase andmed ---");
+// 2. Loome Õpilase objekti
+Õpilane õpilane1 = new Õpilane();
+// Päritud Isik klassist
+õpilane1.Nimi = "Markus";
+õpilane1.Sünniaasta = 2008;
+// Spetsiifilised Õpilane klassile
+õpilane1.Kool = "Kutsehariduskeskus";
+õpilane1.Klass = 10;
+// Päritud meetod
+õpilane1.Tervita();
+// Õpilase enda meetod
+õpilane1.Õpi();
+// Ootame kasutaja sisestust, et konsooliaken kohe ei sulguks
+õpilane1.Kirjelda();
+
+Koolihaldus minuKool = new Koolihaldus();
+minuKool.LisaInimene(õpetaja1);
+minuKool.LisaInimene(õpilane1);
+// Polümorfismi näide: ITööline liides ja erinevad klassid, mis seda rakendavad
+List<ITööline> palgasaajad = new List<ITööline>();
+//Lisa siia tsükli või eraldi rida, et lisada õpetajaid ja õpilasi, kes saavad palka/toetust
+//1 .Variant täitmine eraldi ridadega
+Õpilane mati = new Õpilane();
+mati.Nimi = "Mati";
+mati.KeskmineHinne = 4.0;
+minuKool.LisaInimene(mati);
+Õpilane kadi = new Õpilane { Nimi = "Kadi", Klass = 11, Kool = "Kutsehariduskeskus", KeskmineHinne = 3.5, Puudumised = 5, KasOnSotsTõend = false };
+Õpilane jüri = new Õpilane { Nimi = "Jüri", Klass = 12, Kool = "Kutsehariduskeskus", KeskmineHinne = 4.5, Puudumised = 35, KasOnSotsTõend = true };
+
+
+Õpetaja anna = new Õpetaja { Nimi = "Anna", Aine = "Python", Tunnitasu = 20, TunnidKuus = 80 };
+Õpetaja peeter = new Õpetaja { Nimi = "Peeter", Aine = "C#", Tunnitasu = 25, TunnidKuus = 60 };
+// Lisame kõik palgasaajad ühte listi
+palgasaajad.AddRange(new ITööline[] { mati, kadi, jüri, anna, peeter });
+minuKool.LisaInimene(kadi);
+minuKool.LisaInimene(jüri);
+minuKool.LisaInimene(anna);
+minuKool.LisaInimene(peeter);
+
+//2. variant täitmine tsükli abil
+Random rnd = new Random();
+string[] nimed = { "Maria", "Kati", "Juhan", "Anna", "Siim" };
+//Õppevorm[] vormid = { Õppevorm.Päevane, Õppevorm.Kaugõpe, Õppevorm.Ekstern, Õppevorm.AkadeemilinePuhkus };
+Õppevorm[] vormid = (Õppevorm[])Enum.GetValues(typeof(Õppevorm));
+for (int i = 0; i < nimed.Length; i++)
 {
-    internal class Program
+    Õpilane õpilane = new Õpilane
     {
-        static void Main(string[] args)
-        {
-            //Isik inimene1 = new Isik();
-            //inimene1.Nimi = "Mati";
-            //inimene1.Sünniaasta = 2000;
-            //inimene1.Tervita(); // Väljund: Tere! Mina olen Mati...
-
-            Koolihaldus minuKool = new Koolihaldus();
-            List<ITööline> palgasaajad = new List<ITööline>();
-            Random rnd = new Random();
-            ITööline[] toolised = new ITööline[2]
-            {
-                new Õpilane(),
-                new Õpetaja()
-            };
-
-            //Õpetajad
-            string[] õpetajaNimed = { "Marina", "Aleksei", "Katrin", "Dmitri", "Liisa" };
-            int[] õpetajaSünniaastad = { 1975, 1982, 1990, 1995, 1988 };
-            string[] ained = { "programmeerimine", "matemaatika", "füüsika", "keemia", "eesti keel" };
-            double[] tunnitasud = { 13.8, 15.0, 12.5, 14.2, 16.0 };
-            int[] tunnidKuus = { 120, 130, 140, 150, 160 };
-
-            //Õpilased
-            string[] õpilasNimed = { "Yaroslav", "Anna", "Peeter", "Maria", "Ivan" };
-            int[] õpilasSünniaastad = { 2005, 2006, 2007, 2008, 2009 };
-            string[] koolid = { "TTHK", "Gustav Adolfi Gümnaasium", "Tallinna Reaalkool" };
-            int[] klassid = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
-
-            int[] puudumised = { 0, 5, 10, 13, 20 };
-
-            Õppevorm[] vormid = (Õppevorm[])Enum.GetValues(typeof(Õppevorm)); // teeb list
-
-            for (int i = 0; i < 5; i++)
-            {
-
-                int randomIsik = rnd.Next(0, 2);
-                var tooline = toolised[randomIsik];
-                switch (tooline)
-                {
-                    case Õpilane:
-
-                        Õpilane õpilane = new Õpilane();
-                        õpilane.Nimi = õpilasNimed[rnd.Next(1, 5)];
-                        õpilane.Sünniaasta = õpilasSünniaastad[rnd.Next(1, 5)];
-                        õpilane.Kool = koolid[rnd.Next(1, 3)];
-                        õpilane.Klass = klassid[rnd.Next(1, 12)];
-                        õpilane.KeskmineHinne = rnd.NextDouble() * 5;
-                        õpilane.Puudumised = puudumised[rnd.Next(1, 5)];
-                        õpilane.Staatus = vormid[rnd.Next(vormid.Length)];
-
-                        õpilane.Kirjelda();
-                        õpilane.Õpi();
-                        õpilane.ArvutaPalk();
-                        minuKool.LisaInimene(õpilane);
-                        palgasaajad.Add(õpilane);
-                        Console.WriteLine("===================================================");
-                        break;
-
-
-                    case Õpetaja:
-
-                        Õpetaja õpetaja = new Õpetaja();
-                        õpetaja.Nimi = õpetajaNimed[rnd.Next(1, 5)];
-                        õpetaja.Sünniaasta = õpetajaSünniaastad[rnd.Next(1, 5)];
-                        õpetaja.Aine = ained[rnd.Next(1, 5)];
-                        õpetaja.Tunnitasu = tunnitasud[rnd.Next(1, 5)];
-                        õpetaja.TunnidKuus = tunnidKuus[rnd.Next(1, 5)];
-                        palgasaajad.Add(õpetaja);
-                        õpetaja.Kirjelda();
-                        õpetaja.Õpeta();
-                        minuKool.LisaInimene(õpetaja);
-                        Console.WriteLine("===================================================");
-                        break;
-                    default:
-                        break;
-                }
-
-            }
-            Console.WriteLine("---VÄLJAMAKSED---");
-            foreach (ITööline isik in palgasaajad)
-            {
-                string tüüp = isik.VäljamakseTüüp.ToString();
-                Console.WriteLine($"{tüüp}. summa: {isik.ArvutaPalk()} eurot. {((Isik)isik).Nimi}le");
-
-            }
-
-            Console.WriteLine("================MINU KOOL==================");
-            minuKool.KuvaKõik();
-        }
-    }
+        Nimi = nimed[rnd.Next(nimed.Length)],
+        Klass = rnd.Next(1, 13),
+        Kool = "TTHK",
+        KeskmineHinne = rnd.NextDouble() * 5, // Keskmine hinne vahemikus 0-5
+        Puudumised = rnd.Next(0, 350), // Puudumised vahemikus 0-350
+        KasOnSotsTõend = rnd.Next(0, 2) == 1,
+        Staatus = vormid[rnd.Next(vormid.Length)]// Valime juhusliku õppevormi enumi väärtuste hulgast
+    };
+    palgasaajad.Add(õpilane);
+    õpilane.Kirjelda();
+    minuKool.LisaInimene(õpilane);
+}
+// Nüüd saame ühe tsükliga kõigile palgad/toetused välja arvutada
+Console.WriteLine("--- Väljamaksed ---");
+foreach (ITööline isik in palgasaajad)
+{
+    // Polümorfism teeb siin maagiat: 
+    // Õpilase puhul käivitub toetuse loogika, õpetaja puhul palga loogika!
+    string tüüp = isik.VäljamakseTüüp.ToString();
+    Console.WriteLine($" {tüüp}. Summa: {isik.ArvutaPalk()} eurot. {((Isik)isik).Nimi}le");
 }

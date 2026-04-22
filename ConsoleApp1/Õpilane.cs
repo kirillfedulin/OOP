@@ -10,6 +10,17 @@
         public TööTüüp VäljamakseTüüp { get; set; } = TööTüüp.Toetus;
         public Õppevorm Staatus { get; set; }
 
+        public Õpilane() : base()
+        {
+
+        }
+        public Õpilane(string nimi, string kool, int klass) : base(nimi)
+        {
+            Nimi = nimi;
+            Kool = kool;
+            Klass = klass;
+        }
+
         // 1. ОБЯЗАТЕЛЬНО: Реализация абстрактного метода из Isik
         public override void Kirjelda()
         {

@@ -2,6 +2,7 @@
 {
     private int sünniaasta;
     public string Nimi { get; set; }
+    public int Tunnitasu { get; set; }
 
     public void Ask()
     {
@@ -11,6 +12,13 @@
             Sünniaasta = answer;
         }
     }
+    public Isik(string nimi) { Nimi = nimi; }
+
+    protected Isik()
+    {
+
+    }
+    public Isik(int tunnitasu) { Tunnitasu = tunnitasu;  }
 
     public int Sünniaasta
     {
